@@ -1,0 +1,30 @@
+{% extends 'books/base.html' %}
+
+
+{% block title %}{{ author }}{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'library:author_list' %}">← Назад к списку авторов</a></p>
+
+    <h1>{{ author }}</h1>
+    {% if author.birth_date %}
+        <p><strong>Дата рождения:</strong> {{ author.birth_date }}</p>
+    {% endif %}
+    
+    {% if author.biography %}
+        <h3>Биография:</h3>
+        <p>{{ author.biography }}</p>
+    {% endif %}
+
+    <h3>Книги автора:</h3>
+    <ul>
+    {% for book in books %}
+        <li>
+            <a href="{% url 'library:book_detail' book.slug %}">{{ book.title }}</a> 
+            ({{ book.publication_year } г.) — {{ book.price }} руб.
+        </li>
+    {% empty %}
+        <p>У этого автора пока нет доступных книг.</p>
+    {% endfor %}
+    </ul>
+{% endblock %}

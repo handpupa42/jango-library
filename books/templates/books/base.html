@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Библиотека{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        nav { margin-bottom: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; color: #0066cc; }
+        nav a:hover { text-decoration: underline; }
+        .book, .author { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'books:book_list' %}">Книги</a>
+        <a href="{% url 'books:author_list' %}">Авторы</a>
+        <a href="{% url 'books:about' %}">О библиотеке</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
