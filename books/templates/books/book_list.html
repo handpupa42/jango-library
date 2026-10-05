@@ -1,0 +1,20 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Список книг{% endblock %}
+
+{% block content %}
+    <h1>Доступные книги</h1>
+    
+    <ul>
+    {% for book in books %}
+        <li class="book">
+            <a href="{% url 'books:book_detail' book.slug %}"><strong>{{ book.title }}</strong></a> 
+            — Автор: <a href="{% url 'books:author_detail' book.author.pk %}">{{ book.author }}</a> 
+            ({{ book.publication_year }} г.) — <b>{{ book.price }} руб.</b>
+        </li>
+    {% empty %}
+        <p>Пока ничего нет</p>
+    {% endfor %}
+    </ul>
+{% endblock %}
+

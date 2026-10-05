@@ -1,0 +1,26 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'library:book_list' %}">← Назад к списку книг</a></p>
+    
+    <h1>{{ book.title }}</h1>
+    <p><strong>Автор:</strong> <a href="{% url 'library:author_detail' book.author.pk %}">{{ book.author }}</a></p>
+    
+    <p><strong>Жанры:</strong> 
+        {% for genre in book.genres.all %}
+            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Не указаны
+        {% endfor %}
+    </p>
+    
+    <p><strong>Год издания:</strong> {{ book.publication_year }}</p>
+    <p><strong>Количество страниц:</strong> {{ book.pages }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn|default:"Не указан" }}</p>
+    <p><strong>Цена:</strong> {{ book.price }} руб.</p>
+    
+    <h3>Описание:</h3>
+    <p>{{ book.description|default:"Описание отсутствует." }}</p>
+{% endblock %}

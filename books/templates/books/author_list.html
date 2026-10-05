@@ -1,0 +1,18 @@
+{% extends 'books/base.html' %}
+
+
+{% block title %}Список авторов{% endblock %}
+
+{% block content %}
+    <h1>Авторы</h1>
+    <ul>
+    {% for author in authors %}
+        <li class="author">
+            <a href="{% url 'library:author_detail' author.pk %}"><strong>{{ author }}</strong></a>
+            {% if author.birth_date %} (род. {{ author.birth_date }}){% endif %}
+        </li>
+    {% empty %}
+        <p>Авторов пока нет.</p>
+    {% endfor %}
+    </ul>
+{% endblock %}
