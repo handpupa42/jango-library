@@ -1,26 +1,34 @@
-{% extends 'library/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}{{ book.title }}{% endblock %}
 
 {% block content %}
-    <p><a href="{% url 'library:book_list' %}">← Назад к списку книг</a></p>
+<div class="container">
+    <a href="{% url 'books:book_list' %}" class="btn btn-outline-secondary mb-3">&larr; Назад к списку книг</a>
     
-    <h1>{{ book.title }}</h1>
-    <p><strong>Автор:</strong> <a href="{% url 'library:author_detail' book.author.pk %}">{{ book.author }}</a></p>
-    
-    <p><strong>Жанры:</strong> 
-        {% for genre in book.genres.all %}
-            {{ genre.name }}{% if not forloop.last %}, {% endif %}
-        {% empty %}
-            Не указаны
-        {% endfor %}
-    </p>
-    
-    <p><strong>Год издания:</strong> {{ book.publication_year }}</p>
-    <p><strong>Количество страниц:</strong> {{ book.pages }}</p>
-    <p><strong>ISBN:</strong> {{ book.isbn|default:"Не указан" }}</p>
-    <p><strong>Цена:</strong> {{ book.price }} руб.</p>
-    
-    <h3>Описание:</h3>
-    <p>{{ book.description|default:"Описание отсутствует." }}</p>
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title">{{ book.title }}</h1>
+            <h4 class="text-muted mb-3">Автор: <a href="{% url 'books:author_detail' book.author.pk %}">{{ book.author }}</a></h4>
+            
+            <p><strong>Жанры:</strong> 
+                {% for genre in book.genres.all %}
+                    <span class="badge bg-secondary">{{ genre.name }}</span>
+                {% empty %}
+                    Не указаны
+                {% endfor %}
+            </p>
+            
+            <p><strong>Год издания:</strong> {{ book.publication_year }}</p>
+            <p><strong>Количество страниц:</strong> {{ book.pages }}</p>
+            <p><strong>ISBN:</strong> {{ book.isbn|default:"Не указан" }}</p>
+            <p><strong>Цена:</strong> <span class="text-success fs-5">{{ book.price }} руб.</span></p>
+            
+            <hr>
+            
+            <h5>Описание:</h5>
+            <p class="card-text">{{ book.description|default:"Описание отсутствует." }}</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

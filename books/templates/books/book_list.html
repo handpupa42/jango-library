@@ -1,20 +1,27 @@
-{% extends 'books/base.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Список книг{% endblock %}
+{% block title %}Каталог книг{% endblock %}
 
 {% block content %}
-    <h1>Доступные книги</h1>
-    
-    <ul>
-    {% for book in books %}
-        <li class="book">
-            <a href="{% url 'books:book_detail' book.slug %}"><strong>{{ book.title }}</strong></a> 
-            — Автор: <a href="{% url 'books:author_detail' book.author.pk %}">{{ book.author }}</a> 
-            ({{ book.publication_year }} г.) — <b>{{ book.price }} руб.</b>
-        </li>
-    {% empty %}
-        <p>Пока ничего нет</p>
-    {% endfor %}
-    </ul>
-{% endblock %}
+<h1 class="mb-4">Каталог книг</h1>
 
+<div class="row">
+    {% for book in books %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Автор: {{ book.author }}</h6>
+                    <p class="card-text text-truncate">{{ book.description|default:"Описание отсутствует" }}</p>
+                    <p class="mt-auto"><strong>Цена:</strong> {{ book.price }} руб.</p>
+                    <a href="{% url 'books:book_detail' book.slug %}" class="btn btn-primary mt-2">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">Книг пока нет.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
